@@ -12,7 +12,7 @@ class Pickler:
         self.pickle_dict = {}
 
     # Wesley
-    def pickle_record(self, key, value):
+    def pickle_record_values(self, key, value):
         """ Pickle a record and add to a dictionary
             :param1 key, will be the key defined in the dictionary
             :param2 value, will be pickled
@@ -22,7 +22,7 @@ class Pickler:
         return self.pickle_dict
 
     # Wesley
-    def pickle_dictionary(self, dictionary):
+    def pickle_dictionary_values(self, dictionary):
         """Create a dictionary with pickled values, the key will remain the same"""
         for key, value in dictionary:
             self.pickle_dict[key] = dumps(value)
@@ -33,10 +33,10 @@ class Pickler:
 
 # Just shows that everything works
 # thing = Pickler()
-# thing.pickle_record("hey", "aslkdjflasdkj3r325")
-# thing.pickle_record("he1y", "aslkdjflasdkj34r325")
-# thing.pickle_record("h3ey", "aslkdjflasd4kj3r325")
-# pickled_dict = thing.pickle_record("he2y", "aslkdjflasdkj123r325")
+# thing.pickle_record_values("hey", "aslkdjflasdkj3r325")
+# thing.pickle_record_values("he1y", "aslkdjflasdkj34r325")
+# thing.pickle_record_values("h3ey", "aslkdjflasd4kj3r325")
+# pickled_dict = thing.pickle_record_values("he2y", "aslkdjflasdkj123r325")
 # #
 # # print(pickled_dict)
 # # #

@@ -19,7 +19,6 @@ class Unpickler:
             # Create object that will be treated as a file for unpickling
             file = BytesIO(value)
             self.unpickled_dict[key] = Unpick(file).load()
-        # return self.unpickled_dict
 
 #       Create function to unpickle a key => value pair instead of entire dictionary?
 #       Create function to return the stored dictionary?

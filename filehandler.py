@@ -1,5 +1,7 @@
 from pathlib import Path
 import csv
+import os
+from validator import checker
 
 
 class FileHandler:
@@ -9,8 +11,7 @@ class FileHandler:
     @staticmethod
     def load_file():
         cwd = './Saves/'
-        for file in Path(cwd).iterdir():
-            print(file)
+        print(os.listdir(cwd))
         file = input("Which file do you wish to load? >>> ")
         filename = Path(cwd+file)
         return filename
@@ -22,10 +23,18 @@ class FileHandler:
             return False
 
     def csv_read(self):
+        data = dict()
+        empno = 0
         with open(self.filename) as f:
             reader = csv.DictReader(f)
             for row in reader:
-                print(row)
+                record = dict()
+                for key in row:
+                    record[key] = row.get(key)
+                data[empno] = record
+                empno += 1
+            print(data)
+        return data
 
 
 def run():
@@ -37,4 +46,5 @@ def run():
         a = FileHandler.load_file()
         aclass = FileHandler(a)
     if aclass.file_exist() is True:
-        aclass.csv_read()
+        #aclass.csv_read()
+        checker(aclass.csv_read())

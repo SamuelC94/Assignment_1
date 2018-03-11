@@ -36,7 +36,8 @@ class FileHandler:
         print(suffix)
         file_types = {
             '.csv': FileTypeCSV(),
-            '.xlsx': FileTypeXLSX()
+            '.xlsx': FileTypeXLSX(),
+            '.txt': FileTypeTXT()
         }
         self.file_type = file_types[suffix]
 
@@ -102,6 +103,31 @@ class FileTypeXLSX(FileTypeAbstract):
         return data
 # The above function contains a date object in the dictionary for each date,
 # as the birthday is a date, may need to access the values stored in the date object when validating
+
+
+# Sam
+class FileTypeTXT(FileTypeAbstract):
+    def read(self, filename):
+        empno = 0
+        try:
+            file = open(filename, 'r')
+            print(file)
+            for line in file:
+                print(line)
+                dictionary = dict()
+                rows = line.split(":")
+                for row in rows:
+                    if len(row.split("=")) == 2:
+                        key = row.split("=")[0]
+                        value = row.split("=")[1]
+                        value = value.rstrip('\n')
+                        dictionary[key] = value
+                    else:
+                        print("File error")
+                        return False
+            return dictionary
+        finally:
+            print("something weird happened... guys pls send help")
 
 
 def run():

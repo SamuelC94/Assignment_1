@@ -42,6 +42,15 @@ class Shell(Cmd):
         """
         system('cls')
 
+    # Sam
+    @staticmethod
+    def do_draw(arg):
+        """
+        Syntax: draw [graph name]
+        :param graph_type:
+        :return:
+        """
+        # DB handler method invoke
 
 if __name__ == "__main__":
     prompt = Shell()

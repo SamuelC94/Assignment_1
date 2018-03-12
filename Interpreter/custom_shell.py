@@ -12,10 +12,12 @@ class CustomShell(Cmd):
     file = None
     controller = Controller()
     directory = None
-
+    # if the init is defined then super must be used and each item attached to the object, may be better approach
+    # because it is more explicit
     # def __init__(self):
     #     super().__init__()
     #     self.controller = Controller()
+
     def do_cd(self, line):
         """
         relative traversal through file structure, same as windows
@@ -39,7 +41,7 @@ class CustomShell(Cmd):
         :return: File has been set
         """
         try:
-            self.file = path.realpath(path.relpath(arg))
+            self.file = path.realpath(path.join(self.directory, path.relpath(arg)))
             self.controller.set_file(self.file)
             print(self.file)
             self.prompt = '(Interpreter: ' + path.basename(self.file) + ') '

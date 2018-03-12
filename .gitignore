@@ -1,9 +1,14 @@
 
-.idea/workspace.xml
-.idea/modules.xml
 .idea/BCPR301---Assignment-1.iml
-.idea/inspectionProfiles/profiles_settings.xml
+.idea/dictionaries/WesleyWichman.xml
+.idea/libraries/R_User_Library.xml
 .idea/misc.xml
 .idea/modules.xml
 .idea/vcs.xml
 .idea/workspace.xml
+Interpreter/__pycache__/controller.cpython-36.pyc
+Interpreter/__pycache__/database_decorator.cpython-36.pyc
+Interpreter/__pycache__/database_handler.cpython-36.pyc
+Interpreter/__pycache__/database_local.cpython-36.pyc
+Interpreter/__pycache__/database_remote.cpython-36.pyc
+Interpreter/__pycache__/controller.cpython-36.pyc

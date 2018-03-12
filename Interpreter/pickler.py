@@ -24,33 +24,9 @@ class Pickler:
     # Wesley
     def pickle_dictionary_values(self, dictionary):
         """Create a dictionary with pickled values, the key will remain the same"""
-        for key, value in dictionary:
+        for key, value in dictionary.items():
             self.pickle_dict[key] = dumps(value)
         return self.pickle_dict
-
-    # using a function to get the dictionary instead of returning each time it changes
-    # def get_dictionary(self):
-
-# Just shows that everything works
-# thing = Pickler()
-# thing.pickle_record_values("hey", "aslkdjflasdkj3r325")
-# thing.pickle_record_values("he1y", "aslkdjflasdkj34r325")
-# thing.pickle_record_values("h3ey", "aslkdjflasd4kj3r325")
-# pickled_dict = thing.pickle_record_values("he2y", "aslkdjflasdkj123r325")
-# #
-# # print(pickled_dict)
-# # #
-# aThing = Unpickler()
-#
-# unpickled_dict = aThing.unpickle_dictionary(pickled_dict)
-# # print(unpickled_dict)
-#
-# conn = DBLocal()
-#
-# conn.connect(":memory:")
-# conn.create_table()
-# conn.insert_dictionary(pickled_dict)
-# print(dict(conn.get_db()))
 
 
 

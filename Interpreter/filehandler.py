@@ -128,17 +128,3 @@ class FileTypeTXT(FileTypeAbstract):
             return dictionary
         finally:
             print("something weird happened... guys pls send help")
-
-
-# def run():
-#     a = FileHandler.get_file_name()
-#     aclass = FileHandler(a)
-#     while aclass.file_exist() is False:
-#         print("File exists:", aclass.file_exist())
-#         a = FileHandler.get_file_name()
-#         aclass = FileHandler(a)
-#     aclass.set_file_type()
-#     aclass.read()
-
-
-# run()

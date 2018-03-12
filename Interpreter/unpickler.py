@@ -4,26 +4,20 @@ from io import BytesIO
 
 # Wesley
 class Unpickler:
-
-    # # Wesley - not needed anymore
-    # def __init__(self):
-    #     self.unpickled_dict = {}
-
     # Wesley
     @staticmethod
-    def unpickle_dictionary(self, dictionary):
+    def unpickle_list(list):
         """Input a dictionary with key value
             where value is pickled and return a dictionary
             with unpickled values"""
         # need the items function to iterate through dictionary
         unpickled_dict = dict()
-        for key, value in dictionary.items():
+        print(list)
+        for record in list:
             # Create object that will be treated as a file for unpickling
-            file = BytesIO(value)
-            unpickled_dict[key] = Unpick(file).load()
+            file = BytesIO(record[1])
+            unpickled_dict[record[0]] = Unpick(file).load()
         return unpickled_dict
 
-#       Create function to unpickle a key => value pair instead of entire dictionary?
-#       Create function to return the stored dictionary?
 
 

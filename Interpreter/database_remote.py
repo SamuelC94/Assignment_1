@@ -15,7 +15,6 @@ class DBRemote(DatabaseAbstract):
             :param db selects the database to be used
             This will connect to the remote server and allow access to read/write
             into the database"""
-
         self.connection = remote_connect(host=host,
                                          user=user,
                                          password=password,

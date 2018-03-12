@@ -17,7 +17,7 @@ class GraphScatter(GraphType):
         plotly.offline.plot({
             "data": [go.Scatter(x=dictionary[key], y=dictionary[key2])],
             "layout": go.Layout(title=graph_title)
-        }, filename='ScatterGraph.html')
+        }, filename='ScatterGraph.html', image_filename="Plotly_Scatter_Graph")
 
 
 class GraphPie(GraphType):
@@ -25,7 +25,7 @@ class GraphPie(GraphType):
         plotly.offline.plot({
             "data": [go.Pie(labels=dictionary[key], values=dictionary[key2])],
             "layout": go.Layout(title=graph_title)
-        }, filename='PieGraph.html')
+        }, filename='PieGraph.html', image_filename="Plotly_Pie_Graph")
 
 
 class GraphBar(GraphType):
@@ -33,9 +33,9 @@ class GraphBar(GraphType):
         plotly.offline.plot({
             "data": [go.Bar(x=dictionary[key], y=dictionary[key2])],
             "layout": go.Layout(title=graph_title)
-        }, filename='BarGraph.html')
+        }, filename='BarGraph.html', image='png', image_filename="Plotly_Bar_Graph")
 
-
+# create parameter for setting filename, image and image_filename if it seems necessary
 
 sample1 = {"data1": [1, 2, 3, 4, 5, 6, 7, 8, 9], "data2": [9, 8, 7, 6, 5, 4, 3, 2, 1]}
 sample3 = {"data1": [1, 2, 3, 4, 5, 6, 7, 8, 9], "data2": [9, 8, 7, 6, 5, 4, 3, 2, 1]}

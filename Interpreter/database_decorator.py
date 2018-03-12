@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 from abc import ABCMeta, abstractmethod
 
 
@@ -46,3 +47,15 @@ class DatabaseDecorator:
 
 
 
+=======
+from database_local import DBLocal
+
+
+class DatabaseDecorator:
+    def __init__(self, function, database):
+        function()
+
+    def __call__(self):
+        print("hey")
+
+>>>>>>> 6540e0402541687358a943f73273ca0ddaad4381

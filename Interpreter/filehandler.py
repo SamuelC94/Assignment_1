@@ -84,8 +84,8 @@ class FileTypeXLSX(FileTypeAbstract):
         keys = []
         a_row = 0
         workbook = load_workbook(filename)
-        first_sheet = workbook.get_sheet_names()[0]
-        worksheet = workbook.get_sheet_by_name(first_sheet)
+        first_sheet = workbook.sheetnames[0]
+        worksheet = workbook[first_sheet]
         for row in worksheet.iter_rows():
             record = dict()
             row_num = 0

@@ -12,3 +12,4 @@ Interpreter/__pycache__/database_handler.cpython-36.pyc
 Interpreter/__pycache__/database_local.cpython-36.pyc
 Interpreter/__pycache__/database_remote.cpython-36.pyc
 Interpreter/__pycache__/controller.cpython-36.pyc
+*.pyc

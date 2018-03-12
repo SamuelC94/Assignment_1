@@ -3,7 +3,8 @@ from plotly.graph_objs import Scatter, Layout, Pie, Bar
 from abc import ABCMeta, abstractmethod
 # Create switch for file or image
 
-# Same
+
+# Sam
 class GraphType(metaclass=ABCMeta):
     # Wesley
     def __init__(self, data, filename):

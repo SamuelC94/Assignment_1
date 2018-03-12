@@ -1,6 +1,6 @@
 from database_local import DBLocal
 from database_remote import DBRemote
-# from database_decorator import DatabaseDecorator
+from database_decorator import DatabaseDecorator
 from pickler import Pickler
 from unpickler import Unpickler
 
@@ -47,13 +47,18 @@ class DatabaseHandler:
     @local_decorator
     def insert_local_dict(self, dictionary):
         """Insert values into both the local and remote"""
-        self.local.insert_dictionary(dictionary)
+        pickled = Pickler.pickle_dictionary_values(dictionary)
+        self.local.insert_dictionary(pickled)
         print(self.local.get_db())
         # self.remote.insert_dictionary(dictionary)
 
     @local_decorator
     def create_table(self):
         self.local.create_table()
+
+    @local_decorator
+    def get_local(self):
+        print(self.local.get_db())
 
     def db_sync(self):
         """Will need to test remote first"""
@@ -76,7 +81,8 @@ class DatabaseHandler:
 
 a = DatabaseHandler()
 
-a.set_local(":memory:")
+a.set_local("file")
 a.create_table()
 a.insert_local_dict({1: "chachacha", 2: "asd325f15dsa1f51"})
 
+a.get_local()

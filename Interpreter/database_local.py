@@ -27,3 +27,11 @@ class DBLocal(DatabaseAbstract):
         """Rewrite a record that already exists"""
         record = (value, key)
         self.cursor.execute("update employee set personal = ? where key = ?", record)
+
+    # Wesley
+    def create_table(self):
+        """ Create a table that will be created in the local db
+                    this will store the key and the persons pickled details"""
+        # sqlite3 auto increment is defined as 1 word, not 2 as per usual
+        sql = "Create table if not exists employee(empNo integer primary key autoincrement, personal text)"
+        self.cursor.execute(sql)

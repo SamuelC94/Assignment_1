@@ -1,5 +1,5 @@
-from pymysql import connect as remote_connect
-from pymysql import cursors as remote_cursor
+# from mysqlclient import connect as remote_connect
+from mysql.connector import connect, cursor
 from database_abstract import DatabaseAbstract
 
 
@@ -15,19 +15,21 @@ class DBRemote(DatabaseAbstract):
             :param db selects the database to be used
             This will connect to the remote server and allow access to read/write
             into the database"""
-        self.connection = remote_connect(host=host,
-                                         user=user,
-                                         password=password,
-                                         db=db,
-                                         charset='utf8mb4',
-                                         cursorclass=remote_cursor.DictCursor)
+        self.connection = connect(host=host,
+                                  user=user,
+                                  password=password,
+                                  db=db,
+                                  raise_on_warnings=False,
+                                  charset="utf8mb4")
 
         self.cursor = self.connection.cursor()
 
     # Wesley
     def insert_record(self, value):
         """Insert a single record into the local database"""
-        self.cursor.execute("insert into employee(personal) values(%s)", value)
+        sql = "insert into employee(personal) values(%(value)s)"
+        val = {'value': value}
+        self.cursor.execute(sql, val)
 
     # Wesley
     def delete_record(self, key):
@@ -39,3 +41,11 @@ class DBRemote(DatabaseAbstract):
         """Rewrite a record that already exists"""
         record = (value, key)
         self.cursor.execute("update employee set personal = %s where key = %s", record)
+
+    def create_table(self):
+        """ Create a table that will be created in the local db
+                    this will store the key and the persons pickled details"""
+        # sqlite3 auto increment is defined as 1 word, not 2 as per usual
+        sql = "Create table if not exists employee(empNo integer auto_increment primary key, personal blob)"
+        self.cursor.execute(sql)
+

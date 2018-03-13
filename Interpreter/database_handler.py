@@ -62,10 +62,10 @@ class DatabaseHandler:
     #     self.local.connect()
 
 
-a = DatabaseHandler()
-
-a.set_local("file")
-a.create_table()
-a.insert_local_dict({1: "chachacha", 2: "asd325f15dsa1f51"})
-
-a.get_local()
+# a = DatabaseHandler()
+#
+# a.set_local("file")
+# a.create_table()
+# a.insert_local_dict({1: "chachacha", 2: "asd325f15dsa1f51"})
+#
+# a.get_local()

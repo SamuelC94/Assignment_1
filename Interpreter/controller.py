@@ -5,6 +5,15 @@ from chart import Graph
 import doctest
 
 
+# Will need to connect the filehandler/validator
+# Dictionary as a whole can get passed to the chart
+# select keys for data
+# Then the x/y axis and title
+# Then draw
+
+# Will need to add commands in prompt and controller to use the functions
+# When validator/filehandler is sorted then I can quickly sort the database handler
+
 class Controller:
     def __init__(self):
         self.db_handler = DatabaseHandler()

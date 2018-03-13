@@ -40,7 +40,7 @@ class Shell(Cmd):
         except TypeError:
             print("Type of none is invalid")
 
-    def do_setfile(self, arg):
+    def do_load(self, arg):
         """
         syntax: getfile filename
         :param arg: filename
@@ -48,7 +48,7 @@ class Shell(Cmd):
         """
         try:
             self.file = path.realpath(path.join(self.directory, path.relpath(arg)))
-            result = self.controller.set_file(self.file)
+            result = self.controller.load(self.file)
             if result:
                 self.prompt = '(Interpreter: ' + path.basename(self.file) + ') '
             else:
@@ -56,12 +56,33 @@ class Shell(Cmd):
         except ValueError:
             print("No path was specified, please try again")
 
-    def do_read(self, arg):
+    def do_validate(self, *args):
         """read set file"""
         try:
-            self.controller.read()
+            self.controller.validate()
         except ValueError:
             print("Invalid file selection")
+    # #the_type, filename):
+
+    def do_graph(self, arg):
+        commands = arg.split(" ")
+        if commands[0] == "pie" or commands[0] == "scatter" or commands[0] == "bar":
+            a_path = path.join(self.directory, commands[1] + ".html")
+            self.controller.set_graph(commands[0], a_path)
+            criteria = input("What are the criteria? > ")
+            crit = criteria.split(" ")
+            self.controller.set_criteria(crit[0], crit[1])
+            keys = input("What keys to use? > ")
+            a_key = keys.split(" ")
+            self.controller.set_keys(a_key[0], a_key[1])
+            x = input("What is the x axis called? >")
+            y = input("What is the y axis called? >")
+            title = input("What is the title? >")
+            self.controller.draw(x, y, title)
+        else:
+            print("filename is invalid")
+
+
 
     def do_quit(self, arg):
         """
@@ -71,14 +92,6 @@ class Shell(Cmd):
         """
         print("Quitting ......")
         return True
-
-    def do_load(self, arg):
-        """
-        Syntax: load
-        Load the contents of a file
-        :return:
-        """
-        self.controller.run()
 
 
 if __name__ == '__main__':

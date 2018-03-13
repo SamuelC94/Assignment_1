@@ -100,12 +100,20 @@ class Graph:
         :param filename: sets the save location and file name
         :return: void
         """
+        print("graph")
+        print(dictionary)
         types = {
             'pie': PieGraph(dictionary, filename),
             'scatter': ScatterGraph(dictionary, filename),
             'bar': BarGraph(dictionary, filename)
         }
         self.file_type = types[a_type]
+
+    def set_criteria(self, criteria_1, criteria_2):
+        self.file_type.set_criteria(criteria_1, criteria_2)
+
+    def set_keys(self, key_1, key_2):
+        self.file_type.set_data_keys(key_1, key_2)
 
     def draw(self, x_key, y_key, title):
         self.file_type.draw_graph(x_key, y_key, title)

@@ -25,6 +25,9 @@ class FileHandler:
 
     # James
     def file_exist(self):
+        """
+        Checks if the current file exists
+        """
         if self.filename.exists():
             return True
         else:
@@ -32,8 +35,10 @@ class FileHandler:
 
     # Wesley
     def set_file_type(self):
-        """Will get the file type and will create the
-            corresponding solid class and set it to self.file_type"""
+        """
+        Will get the file type and will create the
+        corresponding solid class and set it to self.file_type
+        """
         suffix = PurePosixPath(self.filename).suffix
         print(suffix)
         file_types = {
@@ -59,6 +64,11 @@ class FileTypeAbstract(metaclass=ABCMeta):
 class FileTypeCSV(FileTypeAbstract):
     # James
     def read(self, filename):
+        """
+        Return dictionary with key => value pairs
+        :param filename is the file where the values exist
+        >>> read("Saves/data.csv")
+        """
         data = dict()
         empno = 0
         with open(filename) as f:
@@ -79,10 +89,11 @@ class FileTypeCSV(FileTypeAbstract):
 class FileTypeXLSX(FileTypeAbstract):
     # Wesley
     def read(self, filename):
-        """Return dictionary with key => value pairs
-            :param filename is the file where the values exist
-            >>> read("Saves/data.xlsx")
-            """
+        """
+        Return dictionary with key => value pairs
+        :param filename is the file where the values exist
+        >>> read("Saves/data.xlsx")
+        """
         data = dict()
         empno = 0
         keys = []
@@ -116,6 +127,11 @@ class FileTypeXLSX(FileTypeAbstract):
 # Sam
 class FileTypeTXT(FileTypeAbstract):
     def read(self, filename):
+        """
+        Return dictionary with key => value pairs
+        :param filename is the file where the values exist
+        >>> read("Saves/data.txt")
+        """
         empno = 0
         try:
             file = open(filename, 'r')

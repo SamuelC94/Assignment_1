@@ -19,12 +19,20 @@ class Shell(Cmd):
     #     self.controller = Controller()
 
     # Wesley
-    def do_cd(self, line):
+    def do_cd(self, dir):
         """
-        relative traversal through file structure, same as windows
+        Syntax:
+            cd [path]
+            relative traversal through file structure, same as windows
+
+        :param line:
+            path: [string]
+
+        :return:
+            New working directory
         """
         try:
-            line = line.lower()
+            line = dir.lower()
             start_path = path.realpath(path.relpath(line))
             if self.directory is None and path.isdir(start_path):
                 self.directory = start_path
@@ -42,9 +50,14 @@ class Shell(Cmd):
 
     def do_load(self, arg):
         """
-        syntax: getfile filename
-        :param arg: filename
-        :return: File has been set
+        Syntax:
+            getfile [filename]
+
+        :param arg:
+            filename: [string]
+
+        :return:
+            File has been set
         """
         try:
             self.file = path.realpath(path.join(self.directory, path.relpath(arg)))
@@ -57,7 +70,17 @@ class Shell(Cmd):
             print("No path was specified, please try again")
 
     def do_validate(self, *args):
-        """read set file"""
+        """
+        Syntax:
+            validate
+            Validates the loaded file
+
+        :param args:
+            none
+
+        :return:
+            The valid dictionary
+        """
         try:
             self.controller.validate()
         except ValueError:
@@ -65,33 +88,61 @@ class Shell(Cmd):
     # #the_type, filename):
 
     def do_graph(self, arg):
+        """
+        Syntax:
+            graph [graphtype] [filename]
+            Displays a graph of the loaded data
+
+        :param arg:
+            graphtype: [bar | scatter | pie]
+            filename: [string]
+
+        :return:
+            The graph
+        """
         commands = arg.split(" ")
         if commands[0] == "pie" or commands[0] == "scatter" or commands[0] == "bar":
             a_path = path.join(self.directory, commands[1] + ".html")
             self.controller.set_graph(commands[0], a_path)
-            criteria = input("What are the criteria? > ")
+            criteria = input("What are the criteria? ([key] [value]) > ")
             crit = criteria.split(" ")
             self.controller.set_criteria(crit[0], crit[1])
-            keys = input("What keys to use? > ")
+            keys = input("What keys to use? ([key1] [key2]) > ")
             a_key = keys.split(" ")
             self.controller.set_keys(a_key[0], a_key[1])
-            x = input("What is the x axis called? >")
-            y = input("What is the y axis called? >")
             title = input("What is the title? >")
-            self.controller.draw(x, y, title)
+            self.controller.draw(a_key[0], a_key[1], title)
         else:
             print("filename is invalid")
 
-
-
     def do_quit(self, arg):
         """
-        Syntax: quit
-        Quit from my CMD
-        :return: True
+        Syntax:
+            quit
+            Quit from my CMD
+
+        :param arg:
+            none
+
+        :return:
+            True
         """
         print("Quitting ......")
         return True
+
+    def do_pwd(self, arg):
+        """
+        Syntax:
+            pwd
+            Print the current working directory
+
+        :param arg:
+            none
+
+        :return:
+            The current working directory
+        """
+        print(str(self.directory))
 
 
 if __name__ == '__main__':

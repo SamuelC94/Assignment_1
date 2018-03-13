@@ -26,7 +26,9 @@ class Controller:
         self.graph = None
 
     def load(self, filename):
-        """Set the file that will create the filehandler object"""
+        """
+        Set the file that will create the filehandler object
+        """
         if path.exists(filename):
             self.filehandler = FileHandler(filename)
             self.filehandler.set_file_type()
@@ -35,7 +37,9 @@ class Controller:
             return False
 
     def validate(self):
-        """Read selected file"""
+        """
+        Read selected file
+        """
         # James' changes (13/03)
         result = self.filehandler.read()
         self.data = result

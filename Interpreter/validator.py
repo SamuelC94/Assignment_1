@@ -1,4 +1,5 @@
 import re
+from copy import deepcopy
 
 
 class Validator:
@@ -153,10 +154,8 @@ class Validator:
 
     def push_row(self, empno):
         print("Adding Row " + str(empno))
-        #
-        # Overwriting, not updating valid_dict
-        #
-        self.valid_dict[empno] = self.temp_dict
+        temp = deepcopy(self.temp_dict)
+        self.valid_dict[empno] = temp
         print(self.valid_dict[empno])
 
     def return_dict(self):

@@ -11,7 +11,7 @@ class Shell(Cmd):
     prompt = '(Interpreter) '
     file = None
     controller = Controller()
-    directory = None
+    directory = path.realpath(path.curdir)
     # if the init is defined then super must be used and each item attached to the object, may be better approach
     # because it is more explicit
     # def __init__(self):

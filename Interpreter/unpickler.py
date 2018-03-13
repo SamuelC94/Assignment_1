@@ -6,7 +6,7 @@ from io import BytesIO
 class Unpickler:
     # Wesley
     @staticmethod
-    def unpickle_list(list):
+    def unpickle_dictionary(list):
         """Input a dictionary with key value
             where value is pickled and return a dictionary
             with unpickled values"""

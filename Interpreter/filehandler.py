@@ -2,6 +2,7 @@ from pathlib import Path, PurePosixPath
 from abc import ABCMeta, abstractmethod
 from csv import DictReader as CSVDictReader
 from openpyxl import load_workbook
+from validator import Validator
 
 
 # James
@@ -68,7 +69,9 @@ class FileTypeCSV(FileTypeAbstract):
                 data[empno] = record
                 empno += 1
             print(data)
-        return data
+        # James' changes (13/03)
+        result = Validator.save_dict(data)
+        return result
 
 
 # Wesley
@@ -128,3 +131,17 @@ class FileTypeTXT(FileTypeAbstract):
             return dictionary
         finally:
             print("something weird happened... guys pls send help")
+
+
+# def run():
+#     a = FileHandler.get_file_name()
+#     aclass = FileHandler(a)
+#     while aclass.file_exist() is False:
+#         print("File exists:", aclass.file_exist())
+#         a = FileHandler.get_file_name()
+#         aclass = FileHandler(a)
+#     aclass.set_file_type()
+#     aclass.read()
+
+
+# run()

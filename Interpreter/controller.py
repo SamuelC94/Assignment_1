@@ -35,7 +35,10 @@ class Controller:
 
     def read(self):
         """Read selected file"""
-        self.filehandler.read()
+        # James' changes (13/03)
+        result = self.filehandler.read()
+        print("The valid data:")
+        print(result)
 
     def set_local(self, name):
         """
@@ -63,4 +66,3 @@ class Controller:
 # if __name__ == "__main__":
 #     c = Controller()
 #     doctest.testmod()
-

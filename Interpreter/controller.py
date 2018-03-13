@@ -11,8 +11,12 @@ import doctest
 # Then the x/y axis and title
 # Then draw
 
-# Will need to add commands in prompt and controller to use the functions
+# need to add commands in prompt and controller to use the functions
 # When validator/filehandler is sorted then I can quickly sort the database handler
+
+# need to create tests and add more doctests, examples in chart
+# More exception handling
+# To show 'robustness' then we just need to prevent all errors in the shell? or will he want us to use as a package?
 
 class Controller:
     def __init__(self):

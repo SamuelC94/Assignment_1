@@ -1,7 +1,8 @@
 from pathlib import Path, PurePosixPath
 from abc import ABCMeta, abstractmethod
 from csv import DictReader as CSVDictReader
-from openpyxl import load_workbook
+from openpyxl import load_workbook, utils
+from datetime import datetime, date
 from validator import Validator
 
 
@@ -97,13 +98,17 @@ class FileTypeXLSX(FileTypeAbstract):
                 if 1 == a_row:
                     keys.append(cell.value)
                 else:
-                    record[keys[row_num]] = cell.value
+                    valid = cell.value
+                    if isinstance(cell.value, datetime):
+                        valid = Validator.xlsx_date(cell.value)
+                    record[keys[row_num]] = valid
                 row_num += 1
             if a_row > 1:
                 data[empno] = record
             empno += 1
         print(data)
-        return data
+        result = Validator.save_dict(data)
+        return result
 # The above function contains a date object in the dictionary for each date,
 # as the birthday is a date, may need to access the values stored in the date object when validating
 

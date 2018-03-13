@@ -1,5 +1,6 @@
 import re
 from copy import deepcopy
+from datetime import datetime, date
 
 
 class Validator:
@@ -41,6 +42,7 @@ class Validator:
             return new_gender
 
     def check_age(self, new_age):
+        new_age = str(new_age)
         match = re.match(self.age, new_age)
         if match:
             return new_age
@@ -49,6 +51,7 @@ class Validator:
             return new_age
 
     def check_sales(self, new_sales):
+        new_sales = str(new_sales)
         match = re.match(self.sales, new_sales)
         if match:
             return new_sales
@@ -70,12 +73,17 @@ class Validator:
             return new_BMI
 
     def check_salary(self, new_salary):
+        new_salary = str(new_salary)
         match = re.match(self.salary, new_salary)
         if match:
             return new_salary
         else:
             new_salary = False
             return new_salary
+
+    @staticmethod
+    def xlsx_date(a_date):
+        return a_date.date().strftime("%d-%m-%Y")
 
     def check_birthday(self, new_birthday):
         match = re.match(self.birthday, new_birthday)
@@ -97,42 +105,49 @@ class Validator:
             if key == "ID":
                 if a.check_empid(value) is False:
                     result = False
+                    print("ID")
                     return result
                 else:
                     a.push_value(key, value)
             elif key == "Gender":
                 if a.check_gender(value) is False:
                     result = False
+                    print("Gender")
                     return result
                 else:
                     a.push_value(key, value)
             elif key == "Age":
                 if a.check_age(value) is False:
                     result = False
+                    print("Age")
                     return result
                 else:
                     a.push_value(key, value)
             elif key == "Sales":
                 if a.check_sales(value) is False:
                     result = False
+                    print("Sales")
                     return result
                 else:
                     a.push_value(key, value)
             elif key == "BMI":
                 if a.check_BMI(value) is False:
                     result = False
+                    print("BMI")
                     return result
                 else:
                     a.push_value(key, value)
             elif key == "Salary":
                 if a.check_salary(value) is False:
                     result = False
+                    print("Salary")
                     return result
                 else:
                     a.push_value(key, value)
             elif key == "Birthday":
                 if a.check_birthday(value) is False:
                     result = False
+                    print("Birthday")
                     return result
                 else:
                     a.push_value(key, value)

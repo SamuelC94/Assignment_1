@@ -144,8 +144,8 @@ class Validator:
             b = a.checker(row)
             if b is False:
                 print("Error at entry: " + str(empno))
-                break
-            a.push_row(empno)
+            else:
+                a.push_row(empno)
         return a.return_dict()
 
     def push_value(self, key, val):

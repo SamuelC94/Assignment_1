@@ -49,7 +49,6 @@ class Shell(Cmd):
             print("Type of none is invalid")
 
     def do_load(self, arg):
-        #doctest James
         """
         Syntax:
             getfile [filename]
@@ -61,18 +60,20 @@ class Shell(Cmd):
             File has been set
         """
         try:
-            self.file = path.realpath(path.join(self.directory, path.relpath(arg)))
-            result = self.controller.load(self.file)
-            if result:
-                self.prompt = '(Interpreter: ' + path.basename(self.file) + ') '
-                self.controller.validate()
+            if path.isfile(path.realpath(path.join(self.directory, path.relpath(arg)))):
+                self.file = path.realpath(path.join(self.directory, path.relpath(arg)))
+                result = self.controller.load(self.file)
+                if result:
+                    self.prompt = '(Interpreter: ' + path.basename(self.file) + ') '
+                    self.controller.validate()
+                else:
+                    print("File does not exist")
             else:
-                print("File does not exist")
+                print("Path is not a file")
         except ValueError:
             print("No path was specified, please try again")
 
     def do_graph(self, arg):
-        #doctest James
         """
         Syntax:
             graph [graphtype] [filename]
@@ -87,24 +88,37 @@ class Shell(Cmd):
         """
         commands = arg.split(" ")
         # James exception handling
-        try:
-            if commands[0] == "pie" or commands[0] == "scatter" or commands[0] == "bar":
-                a_path = path.join(self.directory, commands[1] + ".html")
-                self.controller.set_graph(commands[0], a_path)
-                criteria = input("What are the criteria? ([key] [value]) > ")
-                crit = criteria.split(" ")
-                self.controller.set_criteria(crit[0], crit[1])
-                keys = input("What keys to use? ([key1] [key2]) > ")
-                a_key = keys.split(" ")
-                self.controller.set_keys(a_key[0], a_key[1])
-                title = input("What is the title? >")
-                self.controller.draw(a_key[0], a_key[1], title)
-            else:
-                print("filename is invalid")
-        except IndexError:
-            print("You have entered invalid criteria")
-        except KeyError:
-            print("This key is invalid")
+        if self.controller.check_data():
+            try:
+                if commands[0] == "pie" or commands[0] == "scatter" or commands[0] == "bar":
+                    a_path = path.join(self.directory, commands[1] + ".html")
+                    self.controller.set_graph(commands[0], a_path)
+                    criteria = input("What are the criteria? ([key] [value]) > ")
+                    crit = criteria.split(" ")
+                    if len(crit) > 1:
+                        self.controller.set_criteria(crit[0], crit[1])
+                    else:
+                        self.controller.set_criteria(crit[0])
+                    keys = input("What keys to use? ([key1] [key2]) > ")
+                    a_key = keys.split(" ")
+                    if len(a_key) > 1:
+                        self.controller.set_keys(a_key[0], a_key[1])
+                    else:
+                        self.controller.set_keys(a_key[0])
+                    title = input("What is the title? >")
+                    if len(a_key) > 1:
+                        self.controller.draw(a_key[0], a_key[1], title)
+                    else:
+                        self.controller.draw(a_key[0], a_key[0], title)
+
+                else:
+                    print("filename is invalid")
+            except IndexError:
+                print("You have entered invalid criteria")
+            except KeyError:
+                print("This key is invalid")
+        else:
+            print("Please set data before attempting to create a graph")
 
     def do_quit(self, arg):
         """
@@ -121,8 +135,8 @@ class Shell(Cmd):
         print("Quitting ......")
         return True
 
+    # Wesley
     def do_pwd(self, arg):
-        #doctest James
         """
         Syntax:
             pwd
@@ -137,31 +151,29 @@ class Shell(Cmd):
         print(path.split(self.directory)[0])
 
     def do_save(self, arg):
-        #doctest James
         """
-        Syntax:
-            save [database]
-
+        Syntax: save [database]
         :param arg:
-            database: [local | remote]
-
         :return:
         """
         commands = arg.split(" ")
-        try:
-            if commands[0] == "local":
-                db_name = input("What would you like to name the database? >")
-                self.controller.set_local(db_name)
-            elif commands[0] == "remote":
-                host = input("What is the hostname? >")
-                user = input("What is the username? >")
-                password = input("Input a password >")
-                db = input("What is the database name? >")
-                self.controller.set_remote(host, user, password, db)
-            else:
-                print("invalid database type")
-        except ValueError:
-            print("Try again...")
+        if self.controller.check_data():
+            try:
+                if commands[0].lower() == "local":
+                    db_name = input("What would you like to name the database? >")
+                    self.controller.set_local(db_name)
+                elif commands[0].lower() == "remote":
+                    host = input("What is the hostname? >")
+                    user = input("What is the username? >")
+                    password = input("Input a password >")
+                    db = input("What is the database name? >")
+                    self.controller.set_remote(host, user, password, db)
+                else:
+                    print("invalid database type")
+            except ValueError:
+                print("Try again...")
+        else:
+            print("Please load data before attempting to save")
 
 
 if __name__ == '__main__':

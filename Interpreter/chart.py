@@ -18,7 +18,7 @@ class GraphType(metaclass=ABCMeta):
         pass
 
     # Wesley
-    def set_criteria(self, key, statistic):
+    def set_criteria(self, key, statistic=None):
         """
         This will search through the given dictionary and return each employee that matches the criteria
         e.g. return a dictionary with all people where their gender is male
@@ -31,33 +31,42 @@ class GraphType(metaclass=ABCMeta):
         >>> g.file_type.set_criteria("Gender", "Male")
         {0: {'1ID': 'A23', 'Gender': 'Male', 'Age': 22, 'Sales': 245, 'BMI': 'normal', 'salary': 20, 'Birthday': '24/06/1995'}}
         """
-        self.data = {record[0]: record[1] for record in self.data.items() if record[1][key] == statistic}
+        if statistic is None:
+            self.data = {record[0]: record[1] for record in self.data.items() if record[1][key]}
+        else:
+            self.data = {record[0]: record[1] for record in self.data.items() if record[1][key] == statistic}
         return self.data
 
     # Wesley
-    def set_data_keys(self, key_a, key_b):
+    def set_data_keys(self, key_a, key_b=None):
         """
         :param dictionary:
         :param key_a:
         :param key_b:
         :return:
         >>> g = Graph()
+        >>> g.set_data({"dfd":"asdfds"}, "bar", "C:\\temp\\random.html")
         >>> g.file_type.data = {0: {"1ID": "A23", "Gender": "Male", "Age": 22, "Sales": 245, "BMI": "normal", "salary": 20, "Birthday": "24/06/1995"}, 1: {"IhD": "A2f3", "Gender": "Female", "Age": 22, "Sales": 245, "BMI": "normal", "salary": 20, "Birthday": "24/06/1995"}}
         >>> g.file_type.set_data_keys("Gender", "Sales")
         {'Gender': ['Male', 'Female'], 'Sales': [245, 245]}
         """
-        # dictionary = {key1: [value[1] in x for value in record[1].items() if value[0] == key1] for record in
-        # dictionary.items()} dictionary comprehension has limitations...
-        #too lazy fo lambda
-        keys_a = list()
-        keys_b = list()
-        for (key, value) in self.data.items():
-            for (key1, value1) in value.items():
-                if key1 == key_a:
-                    keys_a.append(value1)
-                if key1 == key_b:
-                    keys_b.append(value1)
-        self.data = {key_a: keys_a, key_b: keys_b}
+        if key_b is None:
+            keys_a = list()
+            for (key, value) in self.data.items():
+                for (key1, value1) in value.items():
+                    if key1 == key_a:
+                        keys_a.append(value1)
+            self.data = {key_a: keys_a}
+        else:
+            keys_a = list()
+            keys_b = list()
+            for (key, value) in self.data.items():
+                for (key1, value1) in value.items():
+                    if key1 == key_a:
+                        keys_a.append(value1)
+                    if key1 == key_b:
+                        keys_b.append(value1)
+            self.data = {key_a: keys_a, key_b: keys_b}
         return self.data
 
 
@@ -106,13 +115,12 @@ class Graph:
         """
         Set the data to be used
         :param dictionary: Will contain the data that will be used
-
         :param a_type: set the type of graph to generate
         :param filename: sets the save location and file name
         :return: void
         """
-        print("graph")
-        print(dictionary)
+        # print("graph")
+        # print(dictionary)
         types = {
             'pie': PieGraph(dictionary, filename),
             'scatter': ScatterGraph(dictionary, filename),

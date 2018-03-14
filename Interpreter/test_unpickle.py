@@ -1,9 +1,6 @@
-# Interpreter/test_unpickle.py
-# from database_abstract import DatabaseAbstract
-# from database_handler import DatabaseHandler
-from .database_local import DBLocal
-from .pickler import Pickler
-from .unpickler import Unpickler
+from database_local import DBLocal
+from pickler import Pickler
+from unpickler import Unpickler
 from unittest import TestCase
 
 

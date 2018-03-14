@@ -96,4 +96,3 @@ class DatabaseHandler:
 # a.insert_local_dict(data)
 # a.get_remote()
 # a.get_local()
-

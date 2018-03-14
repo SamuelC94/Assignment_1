@@ -45,22 +45,23 @@ class Controller:
         self.data = result
         print(result)
 
-    def set_local(self, name):
+    def set_local(self, connection):
         """
         Set the local database with a specified name
-        :param name:
+        :param connection:
         :return:
         """
-        pass
+        self.db_handler.set_local(connection)
+        self.db_handler.insert_local_dict(self.data)
 
-    def local_update(self, dictionary):
+    def set_remote(self, host, user, password, db):
         """
-        Update the local dictionary
-        :param dictionary: Contains validated and pickled data
-        :return: Void: Will input the dictionary into the local database
+        Set the remote database
+        :param host, user, password, db:
+        :return:
         """
-        # self.db_handler.
-        pass
+        self.db_handler.set_remote(host, user, password, db)
+        self.db_handler.insert_remote_dict(self.data)
 
     def set_graph(self, graph_type, filename):
         print(graph_type)

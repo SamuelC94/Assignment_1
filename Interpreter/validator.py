@@ -17,15 +17,6 @@ class Validator:
         self.birthday = "^(0[1-9]|[1-2][0-9]|3(0|1))(-|/)(0[1-9]|1[0-2])(-|/)(19|20)[0-9]{2}$"
 
     def check_empid(self, new_empid):
-        """
-        Checks the empid matches validation rules
-        :param new_empid:
-        :return:
-        # Wesley
-        >>> v = Validator()
-        >>> v.check_empid("A123")
-        'A123'
-        """
         match = re.match(self.empid, new_empid)
         if match:
             return new_empid
@@ -34,15 +25,6 @@ class Validator:
             return new_empid
 
     def check_gender(self, new_gender):
-        """
-        Checks the gender matches validation rules
-        :param new_gender:
-        :return:
-        # Wesley
-        >>> v = Validator()
-        >>> v.check_gender("M")
-        'M'
-        """
         match = re.match(self.gender, new_gender)
         if match:
             return new_gender
@@ -60,15 +42,6 @@ class Validator:
             return new_gender
 
     def check_age(self, new_age):
-        """
-        Checks the age matches validation rules
-        :param new_age:
-        :return:
-        # Wesley
-        >>> v = Validator()
-        >>> v.check_age("24")
-        '24'
-        """
         new_age = str(new_age)
         match = re.match(self.age, new_age)
         if match:
@@ -78,15 +51,6 @@ class Validator:
             return new_age
 
     def check_sales(self, new_sales):
-        """
-        Checks the sales matches validation rules
-        :param new_sales:
-        :return:
-        # Wesley
-        >>> v = Validator()
-        >>> v.check_sales('20')
-        False
-        """
         new_sales = str(new_sales)
         match = re.match(self.sales, new_sales)
         if match:
@@ -96,15 +60,6 @@ class Validator:
             return new_sales
 
     def check_BMI(self, new_BMI):
-        """
-        Checks the BMI matches validation rules
-        :param new_BMI:
-        :return:
-        # Wesley
-        >>> v = Validator()
-        >>> v.check_BMI("normal")
-        'Normal'
-        """
         match = re.match(self.BMI, new_BMI)
         if match:
             return new_BMI
@@ -118,15 +73,6 @@ class Validator:
             return new_BMI
 
     def check_salary(self, new_salary):
-        """
-        Checks the salary matches validation rules
-        :param new_salary:
-        :return:
-        # Wesley
-        >>> v = Validator()
-        >>> v.check_salary("20 521")
-        '20 521'
-        """
         new_salary = str(new_salary)
         match = re.match(self.salary, new_salary)
         if match:
@@ -156,59 +102,45 @@ class Validator:
     def checker(row):
         result = True
         for key, value in row.items():
-            if key == "ID":
+            if key == "ID" or "EMPID" or "EMP_ID":
                 if a.check_empid(value) is False:
                     result = False
-                    # if result == False:
-                    #     print("id")
                     return result
                 else:
                     a.push_value(key, a.check_empid(value))
             elif key == "Gender":
                 if a.check_gender(value) is False:
                     result = False
-                    # if result == False:
-                    #     print("Gender")
                     return result
                 else:
                     a.push_value(key, a.check_gender(value))
             elif key == "Age":
                 if a.check_age(value) is False:
                     result = False
-                    # if result == False:
-                    #     print("Age")
                     return result
                 else:
                     a.push_value(key, a.check_age(value))
             elif key == "Sales":
                 if a.check_sales(value) is False:
                     result = False
-                    # if result == False:
-                    #     print("Sales")
                     return result
                 else:
                     a.push_value(key, a.check_sales(value))
             elif key == "BMI":
                 if a.check_BMI(value) is False:
                     result = False
-                    # if result == False:
-                    #     print("BMI")
                     return result
                 else:
                     a.push_value(key, a.check_BMI(value))
             elif key == "Salary":
                 if a.check_salary(value) is False:
                     result = False
-                    # if result == False:
-                    #     print("Salary")
                     return result
                 else:
                     a.push_value(key, a.check_salary(value))
             elif key == "Birthday":
                 if a.check_birthday(value) is False:
                     result = False
-                    # if result == False:
-                    #     print("Birthday")
                     return result
                 else:
                     a.push_value(key, a.check_birthday(value))
@@ -225,7 +157,7 @@ class Validator:
         return a.return_dict()
 
     def push_value(self, key, val):
-        # print("Adding Value " + key)
+        print("Adding Value " + key)
         self.temp_dict[key] = val
 
     def push_row(self, empno):

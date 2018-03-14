@@ -25,11 +25,14 @@ help
 	List available commands with "help" or detailed help with "help cmd".
 
 load
+	Will load a file
+
 	Syntax:
-		getfile [filename]
+		load [filename] | -database
 
 	:param arg:
 		filename: [string]
+		-database
 
 	:return:
 		File has been set

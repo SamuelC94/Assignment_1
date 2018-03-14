@@ -2,6 +2,7 @@ from database_handler import DatabaseHandler
 from filehandler import FileHandler
 from os import path
 from chart import Graph
+import doctest
 
 
 # Wesley
@@ -51,26 +52,25 @@ class Controller:
         self.db_handler.insert_remote_dict(self.data)
 
     def set_graph(self, graph_type, filename):
-        """
-        Set the graph type
-        :param graph_type: [bar | scatter | pie]
-        :param filename: [string]
-        :return:
-        """
         print(graph_type)
         print(filename)
         self.graph = Graph()
         data = self.data
         self.graph.set_data(data, graph_type, filename)
 
-    def set_criteria(self, criteria_1, criteria_2):
+    def set_criteria(self, criteria_1, criteria_2=None):
         self.graph.set_criteria(criteria_1, criteria_2)
 
-    def set_keys(self, key_1, key_2):
+    def set_keys(self, key_1, key_2=None):
         self.graph.set_keys(key_1, key_2)
 
     def draw(self, x, y, title):
         self.graph.draw(x, y, title)
+
+    def check_data(self):
+        if self.data is not None:
+            return True
+        return False
 
 
 # Controller shouldn't run doctests???

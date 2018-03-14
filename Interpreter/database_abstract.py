@@ -67,15 +67,3 @@ class DatabaseAbstract(metaclass=ABCMeta):
     def update_record(self, key, value):
         pass
 
-
-
-
-
-
-
-
-
-
-
-
-

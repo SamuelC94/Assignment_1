@@ -18,5 +18,3 @@ class Unpickler:
             unpickled_dict[record[0]] = Unpick(file).load()
         return unpickled_dict
 
-
-

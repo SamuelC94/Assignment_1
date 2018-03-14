@@ -51,7 +51,7 @@ class Shell(Cmd):
     def do_load(self, arg):
         """
         Syntax:
-            getfile [filename]
+            load [filename] or [database]
 
         :param arg:
             filename: [string]
@@ -59,19 +59,52 @@ class Shell(Cmd):
         :return:
             File has been set
         """
-        try:
-            if path.isfile(path.realpath(path.join(self.directory, path.relpath(arg)))):
-                self.file = path.realpath(path.join(self.directory, path.relpath(arg)))
-                result = self.controller.load(self.file)
-                if result:
-                    self.prompt = '(Interpreter: ' + path.basename(self.file) + ') '
-                    self.controller.validate()
+        # choice = input("From file or database?")
+        if arg.lower() != "-database":
+            try:
+                if path.isfile(path.realpath(path.join(self.directory, path.relpath(arg)))):
+                    self.file = path.realpath(path.join(self.directory, path.relpath(arg)))
+                    result = self.controller.load(self.file)
+                    if result:
+                        self.prompt = '(Interpreter: ' + path.basename(self.file) + ') '
+                        self.controller.validate()
+                    else:
+                        print("File does not exist")
                 else:
-                    print("File does not exist")
-            else:
-                print("Path is not a file")
-        except ValueError:
-            print("No path was specified, please try again")
+                    print("Path is not a file")
+            except ValueError:
+                print("No path was specified, please try again")
+        elif arg.lower() == "-database":
+            db = input("remote or local?")
+            # if self.controller.check_data():
+            try:
+                if db.lower() == "local":
+                    db_name = input("What is the name of the database? >")
+                    self.controller.set_local(db_name)
+                    self.controller.get_local()
+                    if self.controller.check_data():
+                        print("Data has been loaded")
+                    else:
+                        print("No data was found")
+                elif db.lower() == "remote":
+                    host = input("What is the hostname? >")
+                    user = input("What is the username? >")
+                    password = input("Input a password >")
+                    db = input("What is the database name? >")
+                    self.controller.set_remote(host, user, password, db)
+                    self.controller.get_remote()
+                    if self.controller.check_data():
+                        print("Data has been loaded")
+                    else:
+                        print("No data was found")
+                else:
+                    print("invalid database type")
+            except ValueError:
+                print("Try again...")
+            except AttributeError:
+                print("No data found")
+        else:
+            print("Invalid command")
 
     def do_graph(self, arg):
         """

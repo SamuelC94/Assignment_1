@@ -7,16 +7,16 @@ from re import match
 class Shell(Cmd):
     # This will replace the init stuff, all of it will be set in the parent class, access
     # these values using self.intro, self.prompt etc
-    intro = "Welcome to our custom Interpreter shell. Type help or ? to list commands.\n"
-    prompt = '(Interpreter) '
-    file = None
-    controller = Controller()
-    directory = path.realpath(path.curdir)
+
     # if the init is defined then super must be used and each item attached to the object, may be better approach
     # because it is more explicit
-    # def __init__(self):
-    #     super().__init__()
-    #     self.controller = Controller()
+    def __init__(self):
+        super().__init__()
+        self.controller = Controller()
+        self.intro = "Welcome to our custom Interpreter shell. Type help or ? to list commands.\n"
+        self.prompt = '(Interpreter) '
+        self.file = None
+        self.directory = path.realpath(path.curdir)
 
     # Wesley
     def do_cd(self, arg):

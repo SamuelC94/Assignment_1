@@ -27,7 +27,6 @@ class DatabaseAbstract(metaclass=ABCMeta):
     def insert_dictionary(self, dictionary):
         """Write a dictionary with key and pickled values
             into the database"""
-        print(dictionary)
         for key, value in dictionary.items():
             self.insert_record(value)
 

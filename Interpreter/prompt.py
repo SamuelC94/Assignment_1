@@ -1,3 +1,4 @@
+
 from cmd import Cmd
 from controller import Controller
 from os import path, chdir, getcwd
@@ -7,16 +8,17 @@ from re import match
 class Shell(Cmd):
     # This will replace the init stuff, all of it will be set in the parent class, access
     # these values using self.intro, self.prompt etc
-    intro = "Welcome to our custom Interpreter shell. Type help or ? to list commands.\n"
-    prompt = '(Interpreter) '
-    file = None
-    controller = Controller()
-    directory = path.realpath(path.curdir)
+
     # if the init is defined then super must be used and each item attached to the object, may be better approach
     # because it is more explicit
-    # def __init__(self):
-    #     super().__init__()
-    #     self.controller = Controller()
+    def __init__(self):
+        super().__init__()
+        self.controller = Controller()
+        self.intro = "Welcome to our custom Interpreter shell. Type help or ? to list commands.\n"
+        self.prompt = '(Interpreter) '
+        self.file = None
+        self.controller = Controller()
+        self.directory = path.realpath(path.curdir)
 
     # Wesley
     def do_cd(self, dir):
@@ -24,10 +26,8 @@ class Shell(Cmd):
         Syntax:
             cd [path]
             relative traversal through file structure, same as windows
-
         :param line:
             path: [string]
-
         :return:
             New working directory
         """
@@ -46,16 +46,14 @@ class Shell(Cmd):
         except ValueError:
             print("Invalid command")
         except TypeError:
-            print("Type of none is invalid")
+            print("Please enter a directory")
 
     def do_load(self, arg):
         """
         Syntax:
             getfile [filename]
-
         :param arg:
             filename: [string]
-
         :return:
             File has been set
         """
@@ -74,10 +72,8 @@ class Shell(Cmd):
         Syntax:
             validate
             Validates the loaded file
-
         :param args:
             none
-
         :return:
             The valid dictionary
         """
@@ -92,11 +88,9 @@ class Shell(Cmd):
         Syntax:
             graph [graphtype] [filename]
             Displays a graph of the loaded data
-
         :param arg:
             graphtype: [bar | scatter | pie]
             filename: [string]
-
         :return:
             The graph
         """
@@ -120,10 +114,8 @@ class Shell(Cmd):
         Syntax:
             quit
             Quit from my CMD
-
         :param arg:
             none
-
         :return:
             True
         """
@@ -135,15 +127,12 @@ class Shell(Cmd):
         Syntax:
             pwd
             Print the current working directory
-
         :param arg:
             none
-
         :return:
             The current working directory
         """
         print(str(self.directory))
 
 
-if __name__ == '__main__':
-    Shell().cmdloop()
+Shell().cmdloop()

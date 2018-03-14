@@ -26,6 +26,7 @@ class GraphType(metaclass=ABCMeta):
         :param key: the key value in the dictionary you would like to search
         :param statistic: the set value you would like to search
         :return:
+        >>> g = Graph()
         >>> g.file_type.data = {0: {"1ID": "A23", "Gender": "Male", "Age": 22, "Sales": 245, "BMI": "normal", "salary": 20, "Birthday": "24/06/1995"}, 1: {"IhD": "A2f3", "Gender": "Female", "Age": 22, "Sales": 245, "BMI": "normal", "salary": 20, "Birthday": "24/06/1995"}}
         >>> g.file_type.set_criteria("Gender", "Male")
         {0: {'1ID': 'A23', 'Gender': 'Male', 'Age': 22, 'Sales': 245, 'BMI': 'normal', 'salary': 20, 'Birthday': '24/06/1995'}}
@@ -40,11 +41,14 @@ class GraphType(metaclass=ABCMeta):
         :param key_a:
         :param key_b:
         :return:
+        >>> g = Graph()
         >>> g.file_type.data = {0: {"1ID": "A23", "Gender": "Male", "Age": 22, "Sales": 245, "BMI": "normal", "salary": 20, "Birthday": "24/06/1995"}, 1: {"IhD": "A2f3", "Gender": "Female", "Age": 22, "Sales": 245, "BMI": "normal", "salary": 20, "Birthday": "24/06/1995"}}
         >>> g.file_type.set_data_keys("Gender", "Sales")
         {'Gender': ['Male', 'Female'], 'Sales': [245, 245]}
         """
-        # dictionary = {key1: [value[1] in x for value in record[1].items() if value[0] == key1] for record in dictionary.items()}
+        # dictionary = {key1: [value[1] in x for value in record[1].items() if value[0] == key1] for record in
+        # dictionary.items()} dictionary comprehension has limitations...
+        #too lazy fo lambda
         keys_a = list()
         keys_b = list()
         for (key, value) in self.data.items():
@@ -69,6 +73,13 @@ class ScatterGraph(GraphType):
 # Sam
 class PieGraph(GraphType):
     def draw_graph(self, x_key, y_key, graph_title):
+        """
+
+        :param x_key:
+        :param y_key:
+        :param graph_title:
+        :return:
+        """
         offline.plot({
             "data": [Pie(labels=self.data[x_key], values=self.data[y_key])],
             "layout": Layout(title=graph_title)
@@ -109,12 +120,15 @@ class Graph:
         }
         self.file_type = types[a_type]
 
+    # Wesley
     def set_criteria(self, criteria_1, criteria_2):
         self.file_type.set_criteria(criteria_1, criteria_2)
 
+    # Wesley
     def set_keys(self, key_1, key_2):
         self.file_type.set_data_keys(key_1, key_2)
 
+    # Wesley
     def draw(self, x_key, y_key, title):
         self.file_type.draw_graph(x_key, y_key, title)
 

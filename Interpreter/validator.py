@@ -12,7 +12,7 @@ class Validator:
         self.age = "^[\d]{2}$"
         self.sales = "^[\d]{3}$"
         self.BMI = "^(Normal|Overweight|Obesity|Underweight)$"
-        self.salary = "^[\d]{2}$"
+        self.salary = "^[\d]{2} [\d]{3}$"
         # James (new reg ex)
         self.birthday = "^(0[1-9]|[1-2][0-9]|3(0|1))(-|/)(0[1-9]|1[0-2])(-|/)(19|20)[0-9]{2}$"
 
@@ -27,19 +27,14 @@ class Validator:
     def check_gender(self, new_gender):
         match = re.match(self.gender, new_gender)
         if match:
-            print(new_gender)
             return new_gender
         else:
             # James (new reg ex)
-            print("^^^^^^^^^^^^^^^^^^^^^^^^^^")
-            print(new_gender)
             match = re.match("^((m|M)ale)$", new_gender)
-            print(match)
             if match:
                 new_gender = "M"
                 return new_gender
             match = re.match("^((f|F)emale)$", new_gender)
-            print(match)
             if match:
                 new_gender = "F"
                 return new_gender
@@ -110,52 +105,45 @@ class Validator:
             if key == "ID":
                 if a.check_empid(value) is False:
                     result = False
-                    print("ID")
                     return result
                 else:
-                    a.push_value(key, value)
+                    a.push_value(key, a.check_empid(value))
             elif key == "Gender":
                 if a.check_gender(value) is False:
                     result = False
-                    print("Gender")
                     return result
                 else:
-                    a.push_value(key, value)
+                    a.push_value(key, a.check_gender(value))
             elif key == "Age":
                 if a.check_age(value) is False:
                     result = False
-                    print("Age")
                     return result
                 else:
-                    a.push_value(key, value)
+                    a.push_value(key, a.check_age(value))
             elif key == "Sales":
                 if a.check_sales(value) is False:
                     result = False
-                    print("Sales")
                     return result
                 else:
-                    a.push_value(key, value)
+                    a.push_value(key, a.check_sales(value))
             elif key == "BMI":
                 if a.check_BMI(value) is False:
                     result = False
-                    print("BMI")
                     return result
                 else:
-                    a.push_value(key, value)
+                    a.push_value(key, a.check_BMI(value))
             elif key == "Salary":
                 if a.check_salary(value) is False:
                     result = False
-                    print("Salary")
                     return result
                 else:
-                    a.push_value(key, value)
+                    a.push_value(key, a.check_salary(value))
             elif key == "Birthday":
                 if a.check_birthday(value) is False:
                     result = False
-                    print("Birthday")
                     return result
                 else:
-                    a.push_value(key, value)
+                    a.push_value(key, a.check_birthday(value))
 
     # James' changes (13/03)
     @staticmethod

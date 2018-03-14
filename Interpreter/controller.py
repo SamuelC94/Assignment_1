@@ -5,7 +5,19 @@ from chart import Graph
 import doctest
 
 
-# Wesley
+# Will need to connect the filehandler/validator
+# Dictionary as a whole can get passed to the chart
+# select keys for data
+# Then the x/y axis and title
+# Then draw
+
+# need to add commands in prompt and controller to use the functions
+# When validator/filehandler is sorted then I can quickly sort the database handler
+
+# need to create tests and add more doctests, examples in chart
+# More exception handling
+# To show 'robustness' then we just need to prevent all errors in the shell? or will he want us to use as a package?
+
 class Controller:
     def __init__(self):
         self.db_handler = DatabaseHandler()
@@ -32,10 +44,6 @@ class Controller:
         result = self.filehandler.read()
         self.data = result
         print(result)
-
-    def print_dict(self, data):
-        # Tabulate package to print out a nice looking table in the console
-        pass
 
     def set_local(self, name):
         """

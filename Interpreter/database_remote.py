@@ -1,4 +1,4 @@
-# from mysqlclient import connect as remote_connect
+# Interpreter/database_remote.py
 from mysql.connector import connect, cursor
 from database_abstract import DatabaseAbstract
 
@@ -19,8 +19,7 @@ class DBRemote(DatabaseAbstract):
                                   user=user,
                                   password=password,
                                   db=db,
-                                  raise_on_warnings=False,
-                                  charset="utf8mb4")
+                                  raise_on_warnings=False)
 
         self.cursor = self.connection.cursor()
 

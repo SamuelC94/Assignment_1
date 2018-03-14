@@ -19,12 +19,20 @@ class Shell(Cmd):
     #     self.controller = Controller()
 
     # Wesley
-    def do_cd(self, line):
+    def do_cd(self, arg):
         """
-        relative traversal through file structure, same as windows
+        Syntax:
+            cd [path]
+            relative traversal through file structure, same as windows
+
+        :param arg:
+            path: [string]
+
+        :return:
+            New working directory
         """
         try:
-            line = line.lower()
+            line = arg.lower()
             start_path = path.realpath(path.relpath(line))
             if self.directory is None and path.isdir(start_path):
                 self.directory = start_path
@@ -36,62 +44,136 @@ class Shell(Cmd):
             else:
                 print("Not a valid directory")
         except ValueError:
-            print("Invalid command")
+            print("No path was specified, please try again")
         except TypeError:
             print("Type of none is invalid")
 
     def do_load(self, arg):
         """
-        syntax: getfile filename
-        :param arg: filename
-        :return: File has been set
+        Syntax:
+            getfile [filename]
+
+        :param arg:
+            filename: [string]
+
+        :return:
+            File has been set
         """
         try:
-            self.file = path.realpath(path.join(self.directory, path.relpath(arg)))
-            result = self.controller.load(self.file)
-            if result:
-                self.prompt = '(Interpreter: ' + path.basename(self.file) + ') '
+            if path.isfile(path.realpath(path.join(self.directory, path.relpath(arg)))):
+                self.file = path.realpath(path.join(self.directory, path.relpath(arg)))
+                result = self.controller.load(self.file)
+                if result:
+                    self.prompt = '(Interpreter: ' + path.basename(self.file) + ') '
+                    self.controller.validate()
+                else:
+                    print("File does not exist")
             else:
-                print("File does not exist")
+                print("Path is not a file")
         except ValueError:
             print("No path was specified, please try again")
 
-    def do_validate(self, *args):
-        """read set file"""
-        try:
-            self.controller.validate()
-        except ValueError:
-            print("Invalid file selection")
-    # #the_type, filename):
-
     def do_graph(self, arg):
+        """
+        Syntax:
+            graph [graphtype] [filename]
+            Displays a graph of the loaded data
+
+        :param arg:
+            graphtype: [bar | scatter | pie]
+            filename: [string]
+
+        :return:
+            The graph
+        """
         commands = arg.split(" ")
-        if commands[0] == "pie" or commands[0] == "scatter" or commands[0] == "bar":
-            a_path = path.join(self.directory, commands[1] + ".html")
-            self.controller.set_graph(commands[0], a_path)
-            criteria = input("What are the criteria? > ")
-            crit = criteria.split(" ")
-            self.controller.set_criteria(crit[0], crit[1])
-            keys = input("What keys to use? > ")
-            a_key = keys.split(" ")
-            self.controller.set_keys(a_key[0], a_key[1])
-            x = input("What is the x axis called? >")
-            y = input("What is the y axis called? >")
-            title = input("What is the title? >")
-            self.controller.draw(x, y, title)
+        # James exception handling
+        if self.controller.check_data():
+            try:
+                if commands[0] == "pie" or commands[0] == "scatter" or commands[0] == "bar":
+                    a_path = path.join(self.directory, commands[1] + ".html")
+                    self.controller.set_graph(commands[0], a_path)
+                    criteria = input("What are the criteria? ([key] [value]) > ")
+                    crit = criteria.split(" ")
+                    if len(crit) > 1:
+                        self.controller.set_criteria(crit[0], crit[1])
+                    else:
+                        self.controller.set_criteria(crit[0])
+                    keys = input("What keys to use? ([key1] [key2]) > ")
+                    a_key = keys.split(" ")
+                    if len(a_key) > 1:
+                        self.controller.set_keys(a_key[0], a_key[1])
+                    else:
+                        self.controller.set_keys(a_key[0])
+                    title = input("What is the title? >")
+                    if len(a_key) > 1:
+                        self.controller.draw(a_key[0], a_key[1], title)
+                    else:
+                        self.controller.draw(a_key[0], a_key[0], title)
+
+                else:
+                    print("filename is invalid")
+            except IndexError:
+                print("You have entered invalid criteria")
+            except KeyError:
+                print("This key is invalid")
         else:
-            print("filename is invalid")
-
-
+            print("Please set data before attempting to create a graph")
 
     def do_quit(self, arg):
         """
-        Syntax: quit
-        Quit from my CMD
-        :return: True
+        Syntax:
+            quit
+            Quit from my CMD
+
+        :param arg:
+            none
+
+        :return:
+            True
         """
         print("Quitting ......")
         return True
+
+    # Wesley
+    def do_pwd(self, arg):
+        """
+        Syntax:
+            pwd
+            Print the current working directory
+
+        :param arg:
+            none
+
+        :return:
+            The current working directory
+        """
+        print(path.split(self.directory)[0])
+
+    def do_save(self, arg):
+        """
+        Syntax: save [database]
+        :param arg:
+        :return:
+        """
+        commands = arg.split(" ")
+        if self.controller.check_data():
+            try:
+                if commands[0].lower() == "local":
+                    db_name = input("What would you like to name the database? >")
+                    self.controller.set_local(db_name)
+                elif commands[0].lower() == "remote":
+                    host = input("What is the hostname? >")
+                    user = input("What is the username? >")
+                    password = input("Input a password >")
+                    db = input("What is the database name? >")
+                    self.controller.set_remote(host, user, password, db)
+                else:
+                    print("invalid database type")
+            except ValueError:
+                print("Try again...")
+        else:
+            print("Please load data before attempting to save")
 
 
 if __name__ == '__main__':

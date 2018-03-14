@@ -12,7 +12,6 @@ class Unpickler:
             with unpickled values"""
         # need the items function to iterate through dictionary
         unpickled_dict = dict()
-        print(list)
         for record in list:
             # Create object that will be treated as a file for unpickling
             file = BytesIO(record[1])

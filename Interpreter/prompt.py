@@ -139,6 +139,21 @@ class Shell(Cmd):
         :param arg:
         :return:
         """
+        commands = arg.split(" ")
+        try:
+            if commands[0] == "local":
+                db_name = input("What would you like to name the database? >")
+                self.controller.set_local(db_name)
+            elif commands[0] == "remote":
+                host = input("What is the hostname? >")
+                user = input("What is the username? >")
+                password = input("Input a password >")
+                db = input("What is the database name? >")
+                self.controller.set_remote(host, user, password, db)
+            else:
+                print("invalid database type")
+        except ValueError:
+            print("Try again...")
 
 
 if __name__ == '__main__':

@@ -32,7 +32,7 @@ class DatabaseAbstract(metaclass=ABCMeta):
 
     # Wesley
     def get_db(self):
-        """Return the database"""
+        """Return the database as dictionary"""
         self.cursor.execute("select empNo, personal from employee")
         return self.cursor.fetchall()
 

@@ -3,7 +3,7 @@ from unittest import TestCase
 
 
 # Wesley
-class TestLocal(TestCase):
+class TestPicklerSetUp(TestCase):
     # Wesley
     def setUp(self):
         self.db = DBLocal()

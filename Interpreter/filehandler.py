@@ -139,7 +139,7 @@ class FileTypeTXT(FileTypeAbstract):
             for line in file:
                 print(line)
                 dictionary = dict()
-                rows = line.split(":")
+                rows = line.split(";")
                 for row in rows:
                     if len(row.split("=")) == 2:
                         key = row.split("=")[0]

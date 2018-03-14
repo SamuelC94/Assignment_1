@@ -42,11 +42,13 @@ class GraphType(metaclass=ABCMeta):
         :param key_b:
         :return:
         >>> g = Graph()
-        >>> g.set_data({"dfd":"asdfds"}, "bar", "C:\\temp\\random.html")
         >>> g.file_type.data = {0: {"1ID": "A23", "Gender": "Male", "Age": 22, "Sales": 245, "BMI": "normal", "salary": 20, "Birthday": "24/06/1995"}, 1: {"IhD": "A2f3", "Gender": "Female", "Age": 22, "Sales": 245, "BMI": "normal", "salary": 20, "Birthday": "24/06/1995"}}
         >>> g.file_type.set_data_keys("Gender", "Sales")
         {'Gender': ['Male', 'Female'], 'Sales': [245, 245]}
         """
+        # dictionary = {key1: [value[1] in x for value in record[1].items() if value[0] == key1] for record in
+        # dictionary.items()} dictionary comprehension has limitations...
+        #too lazy fo lambda
         keys_a = list()
         keys_b = list()
         for (key, value) in self.data.items():
@@ -104,12 +106,13 @@ class Graph:
         """
         Set the data to be used
         :param dictionary: Will contain the data that will be used
+
         :param a_type: set the type of graph to generate
         :param filename: sets the save location and file name
         :return: void
         """
-        # print("graph")
-        # print(dictionary)
+        print("graph")
+        print(dictionary)
         types = {
             'pie': PieGraph(dictionary, filename),
             'scatter': ScatterGraph(dictionary, filename),

@@ -114,7 +114,7 @@ class TestValidator(TestCase):
                     "Salary": "20 000", "Birthday": "24/06/1992"}}
         data = {0: {"1D": "A231", "Gender": "Male", "Age": "23", "Sales": "245", "BMI": "normal", "Salary": "20 000",
                 "Birthday": "24/06/1994"},
-                1: {"ID": "A232", "Gender": "M", "Age": "25", "Sales": "270", "BMI": "insane", "Salary": "dajhsbjfa",
+                1: {"ID": "A232", "Gender": "M", "Age": "25", "Sales": "270", "BMI": "normal", "Salary": "dajhsbjfa",
                 "Birthday": "24/06/1992"}}
         result = Validator.save_dict(data)
         self.assertNotEqual(expected, result)
@@ -129,7 +129,7 @@ class TestValidator(TestCase):
                     "Salary": "20 000", "Birthday": "24/06/1992"}}
         data = {0: {"1D": "A231", "Gender": "Male", "Age": "23", "Sales": "245", "BMI": "normal", "Salary": "20 000",
                 "Birthday": "24/06/1994"},
-                1: {"ID": "A232", "Gender": "M", "Age": "25", "Sales": "270", "BMI": "insane", "Salary": "20 000",
+                1: {"ID": "A232", "Gender": "M", "Age": "25", "Sales": "270", "BMI": "normal", "Salary": "20 000",
                 "Birthday": "abcdefg"}}
         result = Validator.save_dict(data)
         self.assertNotEqual(expected, result)

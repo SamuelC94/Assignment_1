@@ -88,7 +88,11 @@ class Validator:
     def check_birthday(self, new_birthday):
         match = re.match(self.birthday, new_birthday)
         if match:
-            return new_birthday
+            #if self.temp_dict["Age"] == (date.today() - (datetime.strptime(new_birthday, "%d-%m-%Y").date())):
+                return new_birthday
+            #else:
+                #new_birthday = False
+                #return new_birthday
         else:
             # James (new reg ex)
             invalid_delims = "^(/|\\|.|:|;|,|_)$"
@@ -109,11 +113,14 @@ class Validator:
                 else:
                     a.push_value(key, a.check_empid(value))
             elif key == "Gender":
-                if a.check_gender(value) is False:
-                    result = False
-                    return result
-                else:
-                    a.push_value(key, a.check_gender(value))
+                try:
+                    if a.check_gender(value) is False:
+                        result = False
+                        return result
+                    else:
+                        a.push_value(key, a.check_gender(value))
+                except TypeError:
+                    print("TypeError")
             elif key == "Age":
                 if a.check_age(value) is False:
                     result = False
@@ -157,7 +164,6 @@ class Validator:
         return a.return_dict()
 
     def push_value(self, key, val):
-        print("Adding Value " + key)
         self.temp_dict[key] = val
 
     def push_row(self, empno):

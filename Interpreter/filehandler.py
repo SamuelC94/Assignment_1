@@ -79,7 +79,7 @@ class FileTypeCSV(FileTypeAbstract):
                     record[key] = row.get(key)
                 data[empno] = record
                 empno += 1
-            print(data)
+            # print(data)
         # James' changes (13/03)
         result = Validator.save_dict(data)
         return result
@@ -92,33 +92,35 @@ class FileTypeXLSX(FileTypeAbstract):
         """
         Return dictionary with key => value pairs
         :param filename is the file where the values exist
-        >>> read("Saves/data.xlsx")
         """
         data = dict()
         empno = 0
         keys = []
         a_row = 0
-        workbook = load_workbook(filename)
-        first_sheet = workbook.sheetnames[0]
-        worksheet = workbook[first_sheet]
-        for row in worksheet.iter_rows():
-            record = dict()
-            row_num = 0
-            for cell in row:
-                a_row = cell.row
-                if 1 == a_row:
-                    keys.append(cell.value)
-                else:
-                    valid = cell.value
-                    if isinstance(cell.value, datetime):
-                        valid = Validator.xlsx_date(cell.value)
-                    record[keys[row_num]] = valid
-                row_num += 1
-            if a_row > 1:
-                data[empno] = record
-            empno += 1
-        print(data)
-        result = Validator.save_dict(data)
+        try:
+            workbook = load_workbook(filename)
+            first_sheet = workbook.sheetnames[0]
+            worksheet = workbook[first_sheet]
+            for row in worksheet.iter_rows():
+                record = dict()
+                row_num = 0
+                for cell in row:
+                    a_row = cell.row
+                    if 1 == a_row:
+                        keys.append(cell.value)
+                    else:
+                        valid = cell.value
+                        if isinstance(cell.value, datetime):
+                            valid = Validator.xlsx_date(cell.value)
+                        record[keys[row_num]] = valid
+                    row_num += 1
+                if a_row > 1:
+                    data[empno] = record
+                empno += 1
+            # print(data)
+            result = Validator.save_dict(data)
+        except PermissionError:
+            print("Sorry, you don't have enough permissions to access this file")
         return result
 # The above function contains a date object in the dictionary for each date,
 # as the birthday is a date, may need to access the values stored in the date object when validating

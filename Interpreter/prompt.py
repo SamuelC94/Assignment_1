@@ -80,7 +80,7 @@ class Shell(Cmd):
             Displays a graph of the loaded data
 
         :param arg:
-            graphtype: [bar | scatter | pie]
+            graphtype: [-bar | -scatter | -pie]
             filename: [string]
 
         :return:
@@ -93,7 +93,7 @@ class Shell(Cmd):
                 if commands[0] == "pie" or commands[0] == "scatter" or commands[0] == "bar":
                     a_path = path.join(self.directory, commands[1] + ".html")
                     self.controller.set_graph(commands[0], a_path)
-                    criteria = input("What are the criteria? ([key] [value]) > ")
+                    criteria = input("What are the criteria? ([key] [value - optional]) > ")
                     crit = criteria.split(" ")
                     if len(crit) > 1:
                         self.controller.set_criteria(crit[0], crit[1])

@@ -106,12 +106,15 @@ class Validator:
     def checker(row):
         result = True
         for key, value in row.items():
-            if key == "ID":
-                if a.check_empid(value) is False:
-                    result = False
-                    return result
-                else:
-                    a.push_value(key, a.check_empid(value))
+            if key == "ID" or "EMPID":
+                try:
+                    if a.check_empid(value) is False:
+                        result = False
+                        return result
+                    else:
+                        a.push_value(key, a.check_empid(value))
+                except TypeError:
+                    print("TypeError")
             elif key == "Gender":
                 try:
                     if a.check_gender(value) is False:
@@ -122,35 +125,50 @@ class Validator:
                 except TypeError:
                     print("TypeError")
             elif key == "Age":
-                if a.check_age(value) is False:
-                    result = False
-                    return result
-                else:
-                    a.push_value(key, a.check_age(value))
+                try:
+                    if a.check_age(value) is False:
+                        result = False
+                        return result
+                    else:
+                        a.push_value(key, a.check_age(value))
+                except TypeError:
+                    print("TypeError")
             elif key == "Sales":
-                if a.check_sales(value) is False:
-                    result = False
-                    return result
-                else:
-                    a.push_value(key, a.check_sales(value))
+                try:
+                    if a.check_sales(value) is False:
+                        result = False
+                        return result
+                    else:
+                        a.push_value(key, a.check_sales(value))
+                except TypeError:
+                    print("TypeError")
             elif key == "BMI":
-                if a.check_BMI(value) is False:
-                    result = False
-                    return result
-                else:
-                    a.push_value(key, a.check_BMI(value))
+                try:
+                    if a.check_BMI(value) is False:
+                        result = False
+                        return result
+                    else:
+                        a.push_value(key, a.check_BMI(value))
+                except TypeError:
+                    print("TypeError")
             elif key == "Salary":
-                if a.check_salary(value) is False:
-                    result = False
-                    return result
-                else:
-                    a.push_value(key, a.check_salary(value))
+                try:
+                    if a.check_salary(value) is False:
+                        result = False
+                        return result
+                    else:
+                        a.push_value(key, a.check_salary(value))
+                except TypeError:
+                    print("TypeError")
             elif key == "Birthday":
-                if a.check_birthday(value) is False:
-                    result = False
-                    return result
-                else:
-                    a.push_value(key, a.check_birthday(value))
+                try:
+                    if a.check_birthday(value) is False:
+                        result = False
+                        return result
+                    else:
+                        a.push_value(key, a.check_birthday(value))
+                except TypeError:
+                    print("TypeError")
 
     # James' changes (13/03)
     @staticmethod

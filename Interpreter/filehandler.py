@@ -69,20 +69,23 @@ class FileTypeCSV(FileTypeAbstract):
         :param filename is the file where the values exist
         >>> read("Saves/data.csv")
         """
-        data = dict()
-        empno = 0
-        with open(filename) as f:
-            reader = CSVDictReader(f)
-            for row in reader:
-                record = dict()
-                for key in row:
-                    record[key] = row.get(key)
-                data[empno] = record
-                empno += 1
-            # print(data)
-        # James' changes (13/03)
-        result = Validator.save_dict(data)
-        return result
+        try:
+            data = dict()
+            empno = 0
+            with open(filename) as f:
+                reader = CSVDictReader(f)
+                for row in reader:
+                    record = dict()
+                    for key in row:
+                        record[key] = row.get(key)
+                    data[empno] = record
+                    empno += 1
+                # print(data)
+            # James' changes (13/03)
+            result = Validator.save_dict(data)
+            return result
+        except TypeError:
+            print("Error!!")
 
 
 # Wesley

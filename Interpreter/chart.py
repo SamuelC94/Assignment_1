@@ -31,14 +31,12 @@ class GraphType(metaclass=ABCMeta):
         >>> g.file_type.set_criteria("Gender", "Male")
         {0: {'1ID': 'A23', 'Gender': 'Male', 'Age': 22, 'Sales': 245, 'BMI': 'normal', 'salary': 20, 'Birthday': '24/06/1995'}}
         """
-        if statistic is None:
-            self.data = {record[0]: record[1] for record in self.data.items() if record[1][key]}
-        else:
+        if statistic is not None:
             self.data = {record[0]: record[1] for record in self.data.items() if record[1][key] == statistic}
         return self.data
 
     # Wesley
-    def set_data_keys(self, key_a, key_b=None):
+    def set_data_keys(self, labels, data):
         """
         :param dictionary:
         :param key_a:
@@ -50,23 +48,15 @@ class GraphType(metaclass=ABCMeta):
         >>> g.file_type.set_data_keys("Gender", "Sales")
         {'Gender': ['Male', 'Female'], 'Sales': [245, 245]}
         """
-        if key_b is None:
-            keys_a = list()
-            for (key, value) in self.data.items():
-                for (key1, value1) in value.items():
-                    if key1 == key_a:
-                        keys_a.append(value1)
-            self.data = {key_a: keys_a}
-        else:
-            keys_a = list()
-            keys_b = list()
-            for (key, value) in self.data.items():
-                for (key1, value1) in value.items():
-                    if key1 == key_a:
-                        keys_a.append(value1)
-                    if key1 == key_b:
-                        keys_b.append(value1)
-            self.data = {key_a: keys_a, key_b: keys_b}
+        keys_a = list()
+        keys_b = list()
+        for (key, value) in self.data.items():
+            for (key1, value1) in value.items():
+                if key1 == labels:
+                    keys_a.append(value1)
+                if key1 == data:
+                    keys_b.append(value1)
+        self.data = {labels: keys_a, data: keys_b}
         return self.data
 
 
@@ -108,7 +98,7 @@ class BarGraph(GraphType):
 class Graph:
     # Wesley
     def __init__(self):
-        self.file_type = None
+        self.graph_type = None
 
     # Wesley
     def set_data(self, dictionary, a_type, filename):
@@ -126,19 +116,19 @@ class Graph:
             'scatter': ScatterGraph(dictionary, filename),
             'bar': BarGraph(dictionary, filename)
         }
-        self.file_type = types[a_type]
+        self.graph_type = types[a_type]
 
     # Wesley
     def set_criteria(self, criteria_1, criteria_2):
-        self.file_type.set_criteria(criteria_1, criteria_2)
+        self.graph_type.set_criteria(criteria_1, criteria_2)
 
     # Wesley
     def set_keys(self, key_1, key_2):
-        self.file_type.set_data_keys(key_1, key_2)
+        self.graph_type.set_data_keys(key_1, key_2)
 
     # Wesley
     def draw(self, x_key, y_key, title):
-        self.file_type.draw_graph(x_key, y_key, title)
+        self.graph_type.draw_graph(x_key, y_key, title)
 
 
 #######################################################################################################################
@@ -156,7 +146,7 @@ class Graph:
 #             3: {"IgD": "A23", "Gender": "Female", "Age": 26, "Sales": 225, "BMI": "normal", "salary": 20,
 #                 "Birthday": "24/06/1995"}}
 #     g.set_data(data, "bar", "C:\\temp\\random.html")
-#     g.file_type.set_criteria("Gender", "Male")
-#     g.file_type.set_data_keys("Age", "Sales")
+#     g.graph_type.set_criteria("Gender", "Male")
+#     g.graph_type.set_data_keys("Age", "Sales")
 #     g.draw("Age", "Sales", "Age sales for males ")
 #     doctest.testmod()

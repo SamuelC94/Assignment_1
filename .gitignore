@@ -28,3 +28,4 @@ Interpreter/__pycache__/filehandler.cpython-36.pyc
 Interpreter/__pycache__/pickler.cpython-36.pyc
 Interpreter/__pycache__/unpickler.cpython-36.pyc
 interpreter/test.html
+*.html

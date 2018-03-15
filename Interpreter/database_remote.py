@@ -1,4 +1,3 @@
-# Interpreter/database_remote.py
 from mysql.connector import connect, cursor
 from database_abstract import DatabaseAbstract
 

@@ -12,7 +12,7 @@ class Validator:
         self.age = "^[\d]{2}$"
         self.sales = "^[\d]{3}$"
         self.BMI = "^(Normal|Overweight|Obesity|Underweight)$"
-        self.salary = "^[\d]{2} [\d]{3}$"
+        self.salary = "^([\d]{2}|[\d]{3})$"
         # James (new reg ex)
         self.birthday = "^(0[1-9]|[1-2][0-9]|3(0|1))(-|/)(0[1-9]|1[0-2])(-|/)(19|20)[0-9]{2}$"
 
@@ -31,6 +31,7 @@ class Validator:
             return new_empid
         else:
             new_empid = False
+            # print("false id")
             return new_empid
 
     def check_gender(self, new_gender):
@@ -52,11 +53,12 @@ class Validator:
             if match:
                 new_gender = "M"
                 return new_gender
-            match = re.match("^((f|F)emale)$", new_gender)
-            if match:
+            fmatch = re.match("^((f|F)emale)$", new_gender)
+            if fmatch:
                 new_gender = "F"
                 return new_gender
             new_gender = False
+            print("false new_gender")
             return new_gender
 
     def check_age(self, new_age):
@@ -75,6 +77,7 @@ class Validator:
             return new_age
         else:
             new_age = False
+            # print("false new_age")
             return new_age
 
     def check_sales(self, new_sales):
@@ -93,6 +96,7 @@ class Validator:
             return new_sales
         else:
             new_sales = False
+            # print("false new_sales")
             return new_sales
 
     def check_BMI(self, new_BMI):
@@ -115,24 +119,17 @@ class Validator:
                 new_BMI = new_BMI.capitalize()
                 return new_BMI
             new_BMI = False
+            # print("false new_BMI")
             return new_BMI
 
     def check_salary(self, new_salary):
-        """
-        Checks the salary matches validation rules
-        :param new_salary:
-        :return:
-        # Wesley
-        >>> v = Validator()
-        >>> v.check_salary("20 521")
-        '20 521'
-        """
         new_salary = str(new_salary)
         match = re.match(self.salary, new_salary)
         if match:
             return new_salary
         else:
             new_salary = False
+            # print("false new_salary")
             return new_salary
 
     @staticmethod
@@ -142,7 +139,11 @@ class Validator:
     def check_birthday(self, new_birthday):
         match = re.match(self.birthday, new_birthday)
         if match:
-            return new_birthday
+            #if self.temp_dict["Age"] == (date.today() - (datetime.strptime(new_birthday, "%d-%m-%Y").date())):
+                return new_birthday
+            #else:
+                #new_birthday = False
+                #return new_birthday
         else:
             # James (new reg ex)
             invalid_delims = "^(/|\\|.|:|;|,|_)$"
@@ -150,6 +151,7 @@ class Validator:
             if match:
                 new_birthday.replace(invalid_delims, '-')
             new_birthday = False
+            # print("false bday")
             return new_birthday
 
     @staticmethod
@@ -159,56 +161,45 @@ class Validator:
             if key == "ID":
                 if a.check_empid(value) is False:
                     result = False
-                    # if result == False:
-                    #     print("id")
                     return result
                 else:
                     a.push_value(key, a.check_empid(value))
             elif key == "Gender":
-                if a.check_gender(value) is False:
-                    result = False
-                    # if result == False:
-                    #     print("Gender")
-                    return result
-                else:
-                    a.push_value(key, a.check_gender(value))
+                try:
+                    if a.check_gender(value) is False:
+                        result = False
+                        return result
+                    else:
+                        a.push_value(key, a.check_gender(value))
+                except TypeError:
+                    print("TypeError")
             elif key == "Age":
                 if a.check_age(value) is False:
                     result = False
-                    # if result == False:
-                    #     print("Age")
                     return result
                 else:
                     a.push_value(key, a.check_age(value))
             elif key == "Sales":
                 if a.check_sales(value) is False:
                     result = False
-                    # if result == False:
-                    #     print("Sales")
                     return result
                 else:
                     a.push_value(key, a.check_sales(value))
             elif key == "BMI":
                 if a.check_BMI(value) is False:
                     result = False
-                    # if result == False:
-                    #     print("BMI")
                     return result
                 else:
                     a.push_value(key, a.check_BMI(value))
             elif key == "Salary":
                 if a.check_salary(value) is False:
                     result = False
-                    # if result == False:
-                    #     print("Salary")
                     return result
                 else:
                     a.push_value(key, a.check_salary(value))
             elif key == "Birthday":
                 if a.check_birthday(value) is False:
                     result = False
-                    # if result == False:
-                    #     print("Birthday")
                     return result
                 else:
                     a.push_value(key, a.check_birthday(value))
@@ -225,14 +216,13 @@ class Validator:
         return a.return_dict()
 
     def push_value(self, key, val):
-        # print("Adding Value " + key)
         self.temp_dict[key] = val
 
     def push_row(self, empno):
         print("Adding Row " + str(empno))
         temp = deepcopy(self.temp_dict)
         self.valid_dict[empno] = temp
-        # print(self.valid_dict[empno])
+        print(self.valid_dict[empno])
 
     def return_dict(self):
         return self.valid_dict

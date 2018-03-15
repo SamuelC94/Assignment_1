@@ -69,23 +69,24 @@ class FileTypeCSV(FileTypeAbstract):
         :param filename is the file where the values exist
         >>> read("Saves/data.csv")
         """
-        try:
-            data = dict()
-            empno = 0
-            with open(filename) as f:
-                reader = CSVDictReader(f)
-                for row in reader:
-                    record = dict()
-                    for key in row:
-                        record[key] = row.get(key)
-                    data[empno] = record
-                    empno += 1
-                # print(data)
-            # James' changes (13/03)
-            result = Validator.save_dict(data)
-            return result
-        except TypeError:
-            print("Error!!")
+        # try:
+        data = dict()
+        empno = 0
+        with open(filename) as f:
+            reader = CSVDictReader(f)
+            for row in reader:
+                record = dict()
+                for key in row:
+                    record[key] = row.get(key)
+                data[empno] = record
+                empno += 1
+            # print(data)
+        # James' changes (13/03)
+        result = Validator.save_dict(data)
+        print(result)
+        return result
+        # except TypeError:
+        #     print("Error!!")
 
 
 # Wesley
@@ -95,7 +96,19 @@ class FileTypeXLSX(FileTypeAbstract):
         """
         Return dictionary with key => value pairs
         :param filename is the file where the values exist
-        """
+        >>> f = FileTypeXLSX()
+        >>> f.read("Saves/doctest.xlsx")
+        {1: {'ID': 'G262', 'Gender': 'Female', 'Age': 12, 'Sales': 215, 'BMI': 'Normal', 'Salary': 23, 'Birthday': '24-05-1993'}, 2: {'ID': 'A233', 'Gender': 'Chihuahua', 'Age': 22, 'Sales': 245, 'BMI': 'normal', 'Salary': 23, 'Birthday': '24-06-1995'}, 3: {'ID': 'A262', 'Gender': 'M', 'Age': 24, 'Sales': 845, 'BMI': 'Normal', 'Salary': 23, 'Birthday': '24-05-1993'}, 4: {'ID': 'A233', 'Gender': 'Female', 'Age': 62, 'Sales': 245, 'BMI': 'normal', 'Salary': 23, 'Birthday': '24-06-1995'}}
+        Adding Row 1
+        {'ID': 'G262', 'Gender': 'F', 'Age': '12', 'Sales': '215', 'BMI': 'Normal', 'Salary': '23', 'Birthday': '24-05-1993'}
+        Error at entry: 2
+        Adding Row 3
+        {'ID': 'A262', 'Gender': 'M', 'Age': '24', 'Sales': '845', 'BMI': 'Normal', 'Salary': '23', 'Birthday': '24-05-1993'}
+        Adding Row 4
+        {'ID': 'A233', 'Gender': 'F', 'Age': '62', 'Sales': '245', 'BMI': 'Normal', 'Salary': '23', 'Birthday': '24-06-1995'}
+        result
+        {1: {'ID': 'G262', 'Gender': 'F', 'Age': '12', 'Sales': '215', 'BMI': 'Normal', 'Salary': '23', 'Birthday': '24-05-1993'}, 3: {'ID': 'A262', 'Gender': 'M', 'Age': '24', 'Sales': '845', 'BMI': 'Normal', 'Salary': '23', 'Birthday': '24-05-1993'}, 4: {'ID': 'A233', 'Gender': 'F', 'Age': '62', 'Sales': '245', 'BMI': 'Normal', 'Salary': '23', 'Birthday': '24-06-1995'}}
+            """
         data = dict()
         empno = 0
         keys = []
@@ -120,10 +133,12 @@ class FileTypeXLSX(FileTypeAbstract):
                 if a_row > 1:
                     data[empno] = record
                 empno += 1
-            # print(data)
+            print(data)
             result = Validator.save_dict(data)
         except PermissionError:
+            result = dict()
             print("Sorry, you don't have enough permissions to access this file")
+        print("result")
         return result
 # The above function contains a date object in the dictionary for each date,
 # as the birthday is a date, may need to access the values stored in the date object when validating

@@ -58,7 +58,7 @@ class Validator:
                 new_gender = "F"
                 return new_gender
             new_gender = False
-            print("false new_gender")
+            # print("false new_gender")
             return new_gender
 
     def check_age(self, new_age):
@@ -157,16 +157,20 @@ class Validator:
     @staticmethod
     def checker(row):
         result = True
+        # try:
         for key, value in row.items():
             if key == "ID":
-                if a.check_empid(value) is False:
-                    result = False
-                    return result
-                else:
-                    a.push_value(key, a.check_empid(value))
+                try:
+                    if value is None or a.check_empid(value) is False:
+                        result = False
+                        return result
+                    else:
+                        a.push_value(key, a.check_empid(value))
+                except TypeError:
+                    print("TypeError")
             elif key == "Gender":
                 try:
-                    if a.check_gender(value) is False:
+                    if value is None or a.check_gender(value) is False:
                         result = False
                         return result
                     else:
@@ -174,35 +178,37 @@ class Validator:
                 except TypeError:
                     print("TypeError")
             elif key == "Age":
-                if a.check_age(value) is False:
+                if value is None or a.check_age(value) is False:
                     result = False
                     return result
                 else:
                     a.push_value(key, a.check_age(value))
             elif key == "Sales":
-                if a.check_sales(value) is False:
+                if value is None or a.check_sales(value) is False:
                     result = False
                     return result
                 else:
                     a.push_value(key, a.check_sales(value))
             elif key == "BMI":
-                if a.check_BMI(value) is False:
+                if value is None or a.check_BMI(value) is False:
                     result = False
                     return result
                 else:
                     a.push_value(key, a.check_BMI(value))
             elif key == "Salary":
-                if a.check_salary(value) is False:
+                if value is None or a.check_salary(value) is False:
                     result = False
                     return result
                 else:
                     a.push_value(key, a.check_salary(value))
             elif key == "Birthday":
-                if a.check_birthday(value) is False:
+                if value is None or a.check_birthday(value) is False:
                     result = False
                     return result
                 else:
                     a.push_value(key, a.check_birthday(value))
+        # except TypeError:
+        #     print("Sorry, there was a type error for a record value")
 
     # James' changes (13/03)
     @staticmethod

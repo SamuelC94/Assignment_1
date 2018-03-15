@@ -8,7 +8,11 @@ class DBLocal(DatabaseAbstract):
     def connect(self, connection=":memory:"):
         """ create object that connects to the local db
             :memory: can be used for a stored db on the ram
-            instead of a file/file location"""
+            instead of a file/file location
+            >>> c = DBLocal()
+            >>> c.connect()
+
+            """
         self.connection = connect(connection)
         self.cursor = self.connection.cursor()
 
